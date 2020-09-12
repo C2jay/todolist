@@ -6,14 +6,19 @@ import "./App.css";
 
 function App() {
   const [todos, setTodos] = useState( [
-    "finish plush project",
-    "eat a cookie",
-    "maul Henry",
-    "drink coffee",
+    {text:"finish plush project", isCompleted: false},
+    {text:"eat a cookie", isCompleted: false},
+    {text:"maul Henry", isCompleted: false},
   ]);
 
   const addTodo = (text) => {
-    const newTodos = [...todos, text];
+    const newTodos = [...todos, {text}];
+    setTodos(newTodos);
+  };
+
+  const completeTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].isCompleted = true;
     setTodos(newTodos);
   };
 
@@ -23,7 +28,12 @@ function App() {
     <div className="todo-list">
       <h1>~ My to-do list ~</h1>
       {todos.map((todo, index) => (
-        <TodoItem todo={todo} key={index} />
+        <TodoItem 
+        todo={todo} 
+        key={index} 
+        index={index} 
+        completeTodo={completeTodo} 
+        />
       ))}
       <TodoForm addTodo={addTodo} />
     </div>
